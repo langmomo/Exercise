@@ -75,6 +75,19 @@ public class Tree {
         }
     }
 
+    public void levelorder(TreeNode node, List<Integer> list){
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(node);
+        while(!q.isEmpty()){
+            node = q.poll();
+            list.add(node.val);
+            if(node.left!=null) q.offer(node.left);
+            if(node.right!=null) q.offer(node.right);
+        }
+
+
+    }
+
     public String output(List<Integer> list){
         String output = String.join("," , list.stream().map(item->String.valueOf(item)).collect(Collectors.toList()));
 
@@ -109,7 +122,7 @@ public class Tree {
     }
 
     public static void main(String[] args){
-        int[] nums = {4,2,6,1,3,5,7};
+        //int[] nums = {4,2,6,1,3,5,7};
         String[] values = {"1","2","3",null, "4","5", null};
         Tree t = new Tree();
         //TreeNode node = t.generateTree(nums);
@@ -132,6 +145,10 @@ public class Tree {
         list.clear();
         t.postorderIteration(node, list);
         System.out.println(String.format("postorder %s %s", t.output(list), "recursion"));
+        list.clear();
+        t.levelorder(node, list);
+        System.out.println(String.format("postorder %s %s", t.output(list), "recursion"));
+
 
 
 

@@ -4,6 +4,7 @@ public class TireTree {
 
     class TireNode{
         TireNode[] arr;
+        boolean isLeaf;
         TireNode(){
             arr = new TireNode[26];
         }
@@ -19,7 +20,9 @@ public class TireTree {
                 curr = curr.arr[str.charAt(i)-'a'];
 
             }
+            curr.isLeaf = true;
         }
+
 
 
         return traversal(node);
@@ -31,6 +34,7 @@ public class TireTree {
         for(int i=0; i<26; i++){
             if(node.arr[i]!=null){
                 total+=traversal(node.arr[i]);
+                System.out.println(total);
             }
         }
         return 1+total;
@@ -38,7 +42,7 @@ public class TireTree {
 
     public static void main(String args[])
     {
-        String str = "ababa";
+        String str = "abab";
         TireTree tree = new TireTree();
         System.out.println("Count of distinct substrings is "
                 + tree.countDistinctSubstring(str));

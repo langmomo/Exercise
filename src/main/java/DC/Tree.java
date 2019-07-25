@@ -88,6 +88,51 @@ public class Tree {
 
     }
 
+    public void levelTraversal(TreeNode root){
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        while(!q.isEmpty()){
+            root = q.poll();
+            if(root!=null){
+                q.offer(root.left);
+                q.offer(root.right);
+                System.out.print(root.val);
+            }else{
+                System.out.print("null");
+            }
+        }
+
+    }
+
+    public TreeNode generateFromPostPre(){
+        //pre root-left- right  in  left-root-right
+        //TreeNode root = new TreeNode(pre[0]);
+        int[] inorder = {2,4,1,5,3};
+        int[] preorder = {1,2,4,3,5};
+        List<Integer> inList = Arrays.stream(inorder).boxed().collect(Collectors.toList());
+        List<Integer> preList = Arrays.stream(preorder).boxed().collect(Collectors.toList());
+        TreeNode root=helperPostPre(preList, inList, 0, 5, 0, 5);
+        levelTraversal(root);
+        return root;
+    }
+
+    public TreeNode helperPostPre(List<Integer> preList, List<Integer> inList, int ps, int pe, int is, int ie){
+        if(ps>=pe || is>=ie) return null;
+        TreeNode root = new TreeNode(preList.get(ps));
+        int ind = inList.indexOf(root.val);
+        List<Integer> leftInList = inList.subList(is, ind);
+        int i=ps+1;
+        for(; i<pe; i++){
+            if(!leftInList.contains(preList.get(i))){
+                break;
+            }
+        }
+        root.left = helperPostPre(preList, inList, ps+1, i, is, ind);
+        root.right = helperPostPre(preList, inList, i, preList.size(), ind+1, inList.size());
+        return root;
+    }
+
+
     public String output(List<Integer> list){
         String output = String.join("," , list.stream().map(item->String.valueOf(item)).collect(Collectors.toList()));
 
@@ -148,7 +193,10 @@ public class Tree {
         list.clear();
         t.levelorder(node, list);
         System.out.println(String.format("postorder %s %s", t.output(list), "recursion"));
-
+        list.clear();
+        TreeNode root = t.generateFromPostPre();
+        //t.levelorder(root, list);
+        //System.out.println(String.format("postorder %s %s", t.output(list), "recursion"));
 
 
 

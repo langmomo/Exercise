@@ -1,0 +1,16 @@
+1. two pointer 最重要的特点是可以得出continuous的结果----比如subarray，substring
+two pointer 的本质就是如何更新两个指针，从而简化运算得到O(n)的时间复杂度
+2. two pointer 可以有两种指针
+   1. 同向指针
+        1）constraint 固定长度  ---得到start+length = end以此为标准来移动两个指针
+        2）求符合条件的最大/虽小长度   condition 可以是 distinct character 此时有一个核心，就是如何来判断start的移动
+        size ==k  达到临界点
+        while(size==k){
+            if(--arr[start++]) size--; 由此来进行start pointer 的移动
+        }
+
+   2. 反向双指针
+        1）此时本身就是sort的， start++ end-- 会造成结果的改变。 arr[start]+arr[end] 随着 start++, end-- 毫无因为是变小，但是range（end-start）也变小。 由此可以出题
+
+
+

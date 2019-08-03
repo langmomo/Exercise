@@ -1,0 +1,38 @@
+为什么需要DP
+
+1。如果暴力解答的方法是N个forloop, 这个时候就需要DP
+举例： 找出3个数字---> 暴力解法需要3重循环，为了减少循环次数，需要这个
+for(int i){
+    for(int j){
+        for(int k){
+
+        }
+    }
+}
+
+1。dp 特征是基于上一个状态来得出下一个状态   由下到上
+     1
+   / |  \
+  2  3   4  对于1这个状态，之后会有2，3，4   状态作为后续状况
+
+
+Dfs+memo  由上到下
+
+root有好几个分支---图 ，一个点有4个选择方向，所以作为经常出现的形式
+//current 点为 a
+
+//退出条件
+if(x > numCount - 1) return
+//是否算过
+if(memo[x][y]!=0){
+    return memo[x][M];
+}
+for(int i=0; i<avail.size(); i++){
+    re = helper();
+    //re(为子结果， 选择子结果中的一个作为memo[a]的值。如何选择呢？可以max，min等)
+
+}
+
+memo[x][y] = re+num[x][y]  ===>当前结果
+return memo[x][y]
+

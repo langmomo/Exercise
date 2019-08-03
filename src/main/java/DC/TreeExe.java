@@ -1,9 +1,10 @@
 package DC;
 
+
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Tree {
+public class TreeExe {
 
     class TreeNode{
         int val = 0;
@@ -36,54 +37,32 @@ public class Tree {
         list.add(node.val);
     }
 
-    public void inorderIteration(TreeNode node, List<Integer> list){
+    public void inorderIteration(TreeNode root, List<Integer> list){
         Stack<TreeNode> stack = new Stack<>();
-        while(!stack.isEmpty() || node !=null){
-            while(node!=null){
-                stack.push(node);
-                node = node.left;
+        while(root!=null || !stack.isEmpty()){
+            while(root!=null){
+                stack.push(root);
+                root = root.left;
             }
-            node = stack.pop();
-            list.add(node.val);
-            node = node.right;
+            root = stack.pop();
+            list.add(root.val);
+            root = root.right;
+
         }
     }
 
-    public void preorderIteration(TreeNode node, List<Integer> list){
+    public void preorderIteration(TreeNode root, List<Integer> list){
         Stack<TreeNode> stack = new Stack<>();
-        while(!stack.isEmpty() || node !=null){
-            while(node!=null){
-                list.add(node.val);
-                stack.push(node);
-                node = node.left;
-            }
-            node = stack.pop();
-            node = node.right;
-        }
+
     }
 
-    public void postorderIteration(TreeNode node, List<Integer> list){
+    public void postorderIteration(TreeNode root, List<Integer> list){
         Stack<TreeNode> stack = new Stack<>();
-        while(!stack.isEmpty() || node!=null){
-            while(node!=null){
-            stack.push(node);
-            list.add(0, node.val);
-            node = node.right;
-        }
-        node = stack.pop();
-        node = node.left;
-        }
+
     }
 
-    public void levelorder(TreeNode node, List<Integer> list){
+    public void levelorder(TreeNode root, List<Integer> list){
         Queue<TreeNode> q = new LinkedList<>();
-        q.offer(node);
-        while(!q.isEmpty()){
-            node = q.poll();
-            list.add(node.val);
-            if(node.left!=null) q.offer(node.left);
-            if(node.right!=null) q.offer(node.right);
-        }
 
 
     }
@@ -169,7 +148,7 @@ public class Tree {
     public static void main(String[] args){
         //int[] nums = {4,2,6,1,3,5,7};
         String[] values = {"1","2","3",null, "4","5", null};
-        Tree t = new Tree();
+        TreeExe t = new TreeExe();
         //TreeNode node = t.generateTree(nums);
         TreeNode node = t.generate(values);
         List<Integer> list = new ArrayList<>();
@@ -189,10 +168,10 @@ public class Tree {
         System.out.println(String.format("postorder %s %s", t.output(list), "recursion"));
         list.clear();
         t.postorderIteration(node, list);
-        System.out.println(String.format("postorder %s %s", t.output(list), "recursion"));
+        System.out.println(String.format("postorder %s %s", t.output(list), "iteration"));
         list.clear();
         t.levelorder(node, list);
-        System.out.println(String.format("levelorder %s %s", t.output(list), "recursion"));
+        System.out.println(String.format("levelorder %s %s", t.output(list), "iteration"));
         list.clear();
         TreeNode root = t.generateFromPostPre();
         //t.levelorder(root, list);
@@ -202,3 +181,4 @@ public class Tree {
 
     }
 }
+

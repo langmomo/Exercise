@@ -20,6 +20,17 @@ public class LinkedListEx {
         return prev;
     }
 
+    public ListNode reverseExe(ListNode root){
+        ListNode prev = null, curr=root, next = null;
+        while(curr!=null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
     public void traversal(ListNode head){
         while(head!=null){
             System.out.print(head.val+" ");
@@ -38,15 +49,14 @@ public class LinkedListEx {
         return head.next;
     }
 
-    public void findMid(ListNode head){
-        ListNode slow = head;
-        ListNode fast = head;
+    public void findMid(ListNode root){
+        ListNode slow = root;
+        ListNode fast = root;
         while(fast!=null && fast.next!=null){
             slow = slow.next;
             fast = fast.next.next;
         }
-        //slow is the end for
-        System.out.println("mid: " +slow.val);
+        System.out.println(slow.val);
     }
 
     public static void main(String[] args){
@@ -58,6 +68,13 @@ public class LinkedListEx {
         reversehead = l.reverseLinkedList(reversehead);
         l.traversal(reversehead);
         l.findMid(reversehead);
+
+
+        ListNode head2 = l.generate(new int[]{1,2,3,4,5,6});
+        ListNode ex = head2;
+        l.findMid(ex);
+        ListNode reverse = head2;
+        l.traversal(l.reverseExe(reverse));
 
     }
 }

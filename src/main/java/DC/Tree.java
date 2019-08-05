@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 
 public class Tree {
 
-    static class TreeNode{
-        int val = 0;
-        TreeNode left = null;
-        TreeNode right = null;
-        TreeNode(int val){
+    public static class TreeNode{
+        public int val = 0;
+        public TreeNode left = null;
+        public TreeNode right = null;
+        public TreeNode(int val){
             this.val = val;
         }
     }
@@ -101,6 +101,24 @@ public class Tree {
                 System.out.print("null");
             }
         }
+
+    }
+    HashMap<Integer, List<Integer>> map = new HashMap<>();
+    public void verticalTraversal(TreeNode root, int level){
+        // node(level)->parent(level-1)->leftchild(level-10->rightchild(level+1)
+        if(root==null) return;
+        if(map.containsKey(level)){
+            List<Integer> list = map.get(level);
+            list.add(root.val);
+            map.put(level, list);
+        }else{
+            List<Integer> list = new ArrayList<>();
+            list.add(root.val);
+            map.put(level, list);
+        }
+        verticalTraversal(root.left, level-1);
+        verticalTraversal(root.right, level+1);
+
 
     }
 

@@ -53,5 +53,7 @@ public class BinarySearch {
         findPivot(arr3);
         int[] arr4 = {3,4,5,6,1,2};
         findPivot(arr4);
+        int[] arr5 = {3,4,1,2};
+        findPivot(arr4);
     }
 }

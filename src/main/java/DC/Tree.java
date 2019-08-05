@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class Tree {
 
-    class TreeNode{
+    static class TreeNode{
         int val = 0;
         TreeNode left = null;
         TreeNode right = null;
@@ -166,6 +166,36 @@ public class Tree {
         return node;
     }
 
+    public void binaryToDoubleLinkedList(TreeNode root){
+        // inorder traversal stack
+        List<TreeNode> list = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        while(!stack.isEmpty() ||  root!=null){
+            while(root!=null){
+                stack.push(root);
+                root=root.left;
+            }
+            root = stack.pop();
+            list.add(root);
+            root = root.right;
+
+        }
+        TreeNode prev = list.get(0);
+        TreeNode start = prev;
+        for(int i=1; i<list.size(); i++){
+            TreeNode curr = list.get(i);
+            prev.right = curr;
+            curr.left = prev;
+            prev = curr;
+        }
+
+        while(start!=null){
+            System.out.print(start.val);
+            start = start.right;
+        }
+
+    }
+
     public static void main(String[] args){
         //int[] nums = {4,2,6,1,3,5,7};
         String[] values = {"1","2","3",null, "4","5", null};
@@ -194,7 +224,9 @@ public class Tree {
         t.levelorder(node, list);
         System.out.println(String.format("levelorder %s %s", t.output(list), "recursion"));
         list.clear();
-        TreeNode root = t.generateFromPostPre();
+        //TreeNode root = t.generateFromPostPre();
+
+        t.binaryToDoubleLinkedList(node);
         //t.levelorder(root, list);
         //System.out.println(String.format("postorder %s %s", t.output(list), "recursion"));
 

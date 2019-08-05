@@ -8,6 +8,23 @@ public class LinkedListEx {
             this.val = val;
         }
     }
+    public ListNode swapPairs(ListNode head) {
+        //1->2->3->4
+        ListNode prev = new ListNode(-1);
+        prev.next = head;
+        ListNode start = prev;
+        while(head !=null && head.next !=null){
+            ListNode temp = head.next.next;
+            head.next.next = head;
+            prev.next = head.next;;
+            head.next = temp;
+            prev = head;
+            head =temp;
+
+        }
+        return start.next;
+
+    }
 
     public ListNode reverseLinkedList(ListNode head){
         ListNode prev=null, curr = head, next = null;

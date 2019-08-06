@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class StackExe {
 
-    public int basicCalculator(String s){
+    public static int basicCalculator(String s){
         //with parenthesis  (2*3)/2+3
         int len;
         if(s==null || (len = s.length())==0) return 0;
@@ -15,6 +15,20 @@ public class StackExe {
         for(int i=0;i<len;i++){
             if(Character.isDigit(s.charAt(i))){
                 num = num*10+s.charAt(i)-'0';
+            }else if(s.charAt(i)=='('){
+                int left = 1;
+                int right = 0;
+                int start = i;
+                while(left>right){
+                    i++;
+                    if(s.charAt(i)=='('){
+                        left++;
+                    }else if(s.charAt(i)==')'){
+                        right++;
+                    }
+                }
+                num = basicCalculator(s.substring(start+1, i));
+
             }
             if((!Character.isDigit(s.charAt(i)) &&' '!=s.charAt(i)) || i==len-1){
                 if(sign=='-'){
@@ -43,6 +57,6 @@ public class StackExe {
 
 
     public static void main(String[] args){
-
+        System.out.println(basicCalculator("-1+4*3/3/3"));
     }
 }

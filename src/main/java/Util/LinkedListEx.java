@@ -46,6 +46,7 @@ public class LinkedListEx {
             curr = next;
         }
         return prev;
+
     }
 
     public void traversal(ListNode head){
@@ -82,7 +83,8 @@ public class LinkedListEx {
         ListNode ordihead = head;
         l.traversal(ordihead);
         ListNode reversehead = head;
-        reversehead = l.reverseLinkedList(reversehead);
+        //reversehead = l.reverseLinkedList(reversehead);
+        reversehead = l.reverseExe(reversehead);
         l.traversal(reversehead);
         l.findMid(reversehead);
 

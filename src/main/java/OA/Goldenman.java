@@ -1,9 +1,6 @@
 package OA;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Goldenman {
 
@@ -70,6 +67,7 @@ public class Goldenman {
 
         int len = total % str.length();
         if(len<0){
+            len=Math.abs(len);
             String left = str.substring(0, len+1);
             String right = str.substring(len+1);
             return right+left;
@@ -83,8 +81,8 @@ public class Goldenman {
     }
 
 
-    public static String[] strangeSort(int[] mapping, String[] nums){
-        HashMap<Integer, Integer> map = new HashMap<>();
+    public static String[] strangeSort(double[] mapping, String[] nums){
+        HashMap<Double, Integer> map = new HashMap<>();
         for(int i=0; i<mapping.length; i++){
             map.put(mapping[i], i);
         }
@@ -93,7 +91,9 @@ public class Goldenman {
             for(int j=0; j<nums[i].length(); j++){
                 sb.append(map.get(nums[i].charAt(j)));
             }
-            nums[i] = sb.toString();
+            String s = sb.toString();
+            if(s.startsWith("0")) s = s.substring(1);
+            nums[i] = s;
         }
         return nums;
     }
@@ -120,6 +120,93 @@ public class Goldenman {
     }
 
 
+    public static int findTheRank(int[][] performace, int rank){
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[1]-b[1]);
+        for(int i=0; i<performace.length; i++){
+            int sum = 0;
+            for(int j=0; i<performace[i].length; j++){
+                 sum+=performace[i][j];
+            }
+            pq.offer(new int[]{i, sum});
+
+        }
+        int[] curr = null;
+        for(int i=1; i<rank; i++){
+            curr = pq.poll();
+        }
+        return curr!=null?curr[0]:0;
+
+    }
+
+    public static int matrixGame(int[][] arr){
+        int[] col = new int[arr[0].length];
+        for(int i=0; i<arr.length; i++){
+            for(int j=0; j<arr[0].length; j++){
+                col[j] = Math.max(col[j], arr[i][j]);
+            }
+        }
+
+        Arrays.sort(col);
+        int a = 0;
+
+        for(int i=0; i<col.length; i++){
+            if(i%2==0){
+                a+=col[i];
+            }else{
+                a-=col[i];
+            }
+        }
+        return Math.abs(a);
+    }
+
+    public static List<Integer> spiralOrderPrimes(int[][] grid){
+        int rowEnd = grid.length-1;
+        int colEnd = grid[0].length-1;
+        int rowStart = 0;
+        int colStart = 0;
+        List<Integer> list = new ArrayList<>();
+        while (rowStart <= rowEnd && colStart <= colEnd) {
+            for (int i = colStart; i <= colEnd; i ++) {
+                if(isPrime(grid[rowStart][i])) list.add(grid[rowStart][i]);
+            }
+            rowStart ++;
+
+            for (int i = rowStart; i <= rowEnd; i ++) {
+                if(isPrime(grid[i][colEnd])) list.add(grid[i][colEnd]);
+            }
+            colEnd --;
+
+            for (int i = colEnd; i >= colStart; i --) {
+                if (rowStart <= rowEnd && isPrime(grid[rowEnd][i]))
+                    list.add(grid[rowEnd][i]);
+            }
+            rowEnd --;
+
+            for (int i = rowEnd; i >= rowStart; i --) {
+                if (colStart <= colEnd && isPrime(grid[i][colStart]))
+                    list.add(grid[i][colStart]);
+            }
+            colStart ++;
+        }
+        return list;
+    }
+    public static boolean isPrime(int num) {
+        // 两个较小数另外处理
+        if(num==1) return false;
+        if (num == 2 || num == 3)
+            return true;
+        // 不在6的倍数两侧的一定不是质数
+        if (num % 6 != 1 && num % 6 != 5)
+            return false;
+        int tmp = (int) Math.sqrt(num);
+        // 在6的倍数两侧的也可能不是质数
+        for (int i = 5; i <= tmp; i += 6)
+            if (num % i == 0 || num % (i + 2) == 0)
+                return false;
+        // 排除所有，剩余的是质数
+        return true;
+    }
+
     public static void outputArray(int[][] grid){
         for(int[] row: grid){
             StringBuilder sb = new StringBuilder();
@@ -133,5 +220,7 @@ public class Goldenman {
         gridGame(grid, 2, new int[]{3,5});
         mostCommon("ddddabcdecdcdefgcdde");
         analyzeInvestiment("ABBCZBAC");
+        System.out.println(rotateTheString("hurart",new int[]{0,1}, new int[]{4,2}));
+        System.out.println(spiralOrderPrimes(new int[][]{{7,7,3,8,1},{13,5,4,5,2},{9,2,12,3,9},{6,12,1,11,41}}));
     }
 }
